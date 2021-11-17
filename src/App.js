@@ -1,23 +1,32 @@
-import logo from './logo.svg';
+import React from 'react'
+import { Routes, Route } from 'react-router-dom';
+
+import Layout from './pages/LayoutPage/LayoutPage';
+import HomePage from './pages/HomePage/HomePage';
+import BudgetPage from './pages/BudgetPage/BudgetPage';
+import LoginPage from './pages/LoginPage/LoginPage';
+import SignUpPage from './pages/SignUpPage/SignUpPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+
 import './App.css';
 
-function App() {
+
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="budget" element={<BudgetPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignUpPage />} />
+
+          {/* Using path="*"" means "match anything", so this route
+                acts like a catch-all for URLs that we don't have explicit
+                routes for. */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
     </div>
   );
 }
