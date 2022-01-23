@@ -15,11 +15,11 @@ const App = () => {
   return (
     <div className="App">
       <Routes>
+        <Route path="login" element={<LoginPage />} />
+        <Route path="signup" element={<SignUpPage />} />
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="budget" element={<BudgetPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="signup" element={<SignUpPage />} />
 
           {/* Using path="*"" means "match anything", so this route
                 acts like a catch-all for URLs that we don't have explicit
