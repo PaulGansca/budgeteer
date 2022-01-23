@@ -14,6 +14,8 @@ import './login.css';
 
 const LoginPage = () => {
     const [isFocused, setIsFocused] = useState('');
+    const [emailVal, setEmailVal] = useState('');
+    const [passwordVal, setPasswordVal] = useState('');
     const emailRules = [{
         required: true,
         message: 'Please input your email!'
@@ -44,20 +46,22 @@ const LoginPage = () => {
                     <Form name="loginForm" onFinish={handleSubmit}>
                         <img src={Avatar} alt="Avatar" />
                         <h2 className="title">Welcome</h2>
-                        <Form.Item className={isFocused === 'email' ? 'focus login-input' : 'login-input'} rules={emailRules}>
+                        <Form.Item className={isFocused === 'email' || emailVal.length ? 'focus login-input' : 'login-input'} rules={emailRules}>
                             <h5 className="input-label">Email</h5>
                             <CustomInput name="email" bordered={false} type="text"
-                                onFocus={(e) => setIsFocused(e.target.name)} onBlur={(e) => setIsFocused('')}
+                                onFocus={(e) => setIsFocused(e.target.name)} onBlur={() => setIsFocused('')}
+                                onChange={(e) => setEmailVal(e.target.value)}
                                 prefix={<UserOutlined style={{ marginRight: 10 }} className="input-icon" />} />
                         </Form.Item>
-                        <Form.Item className={isFocused === 'password' ? 'focus login-input' : 'login-input'} rules={passwordRules}>
+                        <Form.Item className={isFocused === 'password' || passwordVal.length ? 'focus login-input' : 'login-input'} rules={passwordRules}>
                             <h5 className="input-label">Password</h5>
                             <CustomInput name="password" bordered={false} type="password"
-                                onFocus={(e) => setIsFocused(e.target.name)} onBlur={(e) => setIsFocused('')}
+                                onFocus={(e) => setIsFocused(e.target.name)} onBlur={() => setIsFocused('')}
+                                onChange={(e) => setPasswordVal(e.target.value)}
                                 prefix={<LockOutlined style={{ marginRight: 10 }} className="input-icon" />} />
                         </Form.Item>
                         <Link to='/login'>Forgot Password?</Link>
-                        <input type="submit" className="btn" value="Login" />
+                        <input type="submit" className="btn" />
                         <Divider dashed={true}>Or</Divider>
                         <CustomButton icon={<GoogleOutlined />} shape="round">Sign in with google</CustomButton>
                         <p style={{ marginTop: 16, marginBottom: 10 }}>Don't have an account?
