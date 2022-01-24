@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { UserOutlined, LockOutlined, GoogleOutlined } from '@ant-design/icons';
 import { Divider, Form } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-import { auth } from '../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 
 import CustomButton from '../../components/custom-button/custom-button';
 import CustomInput from '../../components/custom-inputs/custom-input';
@@ -18,6 +18,8 @@ const LoginPage = () => {
     const [isFocused, setIsFocused] = useState('');
     const [emailVal, setEmailVal] = useState('');
     const [passwordVal, setPasswordVal] = useState('');
+    let navigate = useNavigate();
+    let location = useLocation();
     const emailRules = [{
         required: true,
         message: 'Please input your email!'
@@ -33,6 +35,8 @@ const LoginPage = () => {
         const { email, password } = values;
         try {
             await auth.signInWithEmailAndPassword(email, password);
+            let from = location.state.from.pathname || "/";
+            navigate(from, { replace: true });
         } catch (e) {
             alert(e);
         }
@@ -65,7 +69,7 @@ const LoginPage = () => {
                         <Link to='/login'>Forgot Password?</Link>
                         <input type="submit" className="btn" />
                         <Divider dashed={true}>Or</Divider>
-                        <CustomButton icon={<GoogleOutlined />} shape="round">Sign in with google</CustomButton>
+                        <CustomButton icon={<GoogleOutlined />} onClick={signInWithGoogle} shape="round">Sign in with google</CustomButton>
                         <p style={{ marginTop: 16, marginBottom: 10 }}>Don't have an account?
                             {<CustomButton type="link">
                                 {<Link to='/signup'>Sign Up</Link>}

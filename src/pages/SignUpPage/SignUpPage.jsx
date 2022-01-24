@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { Form } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { createUserProfileDocument, auth } from '../../firebase/firebase.utils';
 import { checkEmailExists } from '../../firebase/crud-user';
@@ -21,6 +21,7 @@ const SignUpPage = () => {
     const [emailVal, setEmailVal] = useState('');
     const [passwordVal, setPasswordVal] = useState('');
     const [confirmPasswordVal, setConfirmPasswordVal] = useState('');
+    let navigate = useNavigate();
     const regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const nameRules = [{
         required: true,
@@ -69,6 +70,7 @@ const SignUpPage = () => {
         try {
             const { user } = await auth.createUserWithEmailAndPassword(email, password);
             await createUserProfileDocument(user, { name });
+            navigate('/', { replace: true });
         } catch (e) {
             console.log(e)
         }
