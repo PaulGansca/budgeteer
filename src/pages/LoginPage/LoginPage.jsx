@@ -3,6 +3,8 @@ import { UserOutlined, LockOutlined, GoogleOutlined } from '@ant-design/icons';
 import { Divider, Form } from 'antd';
 import { Link } from 'react-router-dom';
 
+import { auth } from '../../firebase/firebase.utils';
+
 import CustomButton from '../../components/custom-button/custom-button';
 import CustomInput from '../../components/custom-inputs/custom-input';
 
@@ -30,7 +32,7 @@ const LoginPage = () => {
     const handleSubmit = async (values) => {
         const { email, password } = values;
         try {
-            //await auth.signInWithEmailAndPassword(email, password);
+            await auth.signInWithEmailAndPassword(email, password);
         } catch (e) {
             alert(e);
         }
